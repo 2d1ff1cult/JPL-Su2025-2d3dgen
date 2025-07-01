@@ -47,5 +47,11 @@ pip install accelerate==0.34.2 cadquery-ocp==7.7.2 casadi==3.6.7 einops==0.8.0 \
             manifold3d==3.0.0 trimesh==4.5.3 contourpy==1.3.1 scipy==1.14.1 \
             imageio==2.36.1 scikit-image==0.25.0 ipykernel==6.29.5 ipywidgets==8.1.5
 
+cd ../
+copy chat_cadrille.py cadrille\
+
+# provide a pause so user can read outputs
+pause
+
 # clear install cache and remove all wheels
 pip cache purge
