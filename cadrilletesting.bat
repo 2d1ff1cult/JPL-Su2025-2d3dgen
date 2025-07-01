@@ -1,0 +1,19 @@
+py -3.10 -m venv cadrille-venv
+call .\cadrille-venv\Scripts\activate
+echo venv activated
+pause
+pip install qwen_vl_utils
+pip install transformers==4.50.3
+pause
+pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+pip install git+https://github.com/facebookresearch/pytorch3d@06a76ef8ddd00b6c889768dfc990ae8cb07c6f2f
+pip install git+https://github.com/CadQuery/cadquery@e99a15df3cf6a8
+pip install accelerate==0.34.2 cadquery-ocp==7.7.2 casadi==3.6.7 einops==0.8.0 qwen-vl-utils==0.0.10 flash-attn==2.7.2.post1 manifold3d==3.0.0 trimesh==4.5.3 contourpy==1.3.1 scipy==1.14.1 imageio==2.36.1 scikit-image==0.25.0 ipykernel==6.29.5 ipywidgets==8.1.5
+
+pip cache purge
+
+copy chat_cadrille.py cadrille\
+cd cadrille
+
+call python chat_cadrille.py || pause
+
