@@ -59,8 +59,8 @@ py -3.10 -m pip install -r requirements.lock.txt
 :: windows CMD
 mkdir pretrained
 cd pretrained
-:: curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt" --output "vae.pt"
-:: curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt" --output "flow.pt"
+curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt" --output "vae.pt"
+curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt" --output "flow.pt"
 :: linux
 :: wget https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt
 :: wget https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt
