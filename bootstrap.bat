@@ -57,14 +57,10 @@ pause
 echo Changing back to directory of this script
 cd ../../
 dir
-
-git clone https://github.com/col14m/cadrille.git
-cd cadrille
-
 :: replicate the pip installs from the Dockerfile from cadrille github:
 pip install -r cadrille_requirements.txt
+git clone https://github.com/col14m/cadrille.git
 
-cd ../
 copy chat_cadrille.py cadrille\
 
 :: clear install cache and remove all wheels
