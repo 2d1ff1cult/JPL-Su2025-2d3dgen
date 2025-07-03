@@ -5,26 +5,40 @@
 :: add to path
 :: done and restart all terminals
 
-pip install --upgrade pip
 :: for later use; packing the environment for cross-user repeatability
 py -3.10 -m pip install venv-pack wheel
+git config --system core.longpaths true
+git lfs install
 
 :: define a new virtual environment on py3.10
 py -3.10 -m venv 2d3dgen
 :: activate virtual environment
 call .\2d3dgen\Scripts\activate
 
-py -3.10 -m pip install torch==2.5.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+:: upgrade pip
+pip install --upgrade pip
 
-py -3.10 -m pip install qwen-vl-utils==0.0.11
+:: uninstall and reinstall wheel and setuptools
+py -3.10 -m pip uninstall wheel setuptools -y
+py -3.10 -m pip install --upgrade wheel setuptools
+
+py -3.10 -m pip install ninja
+
+py -3.10 -m pip uninstall torch torchvision torchaudio -y
+# py -3.10 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+# py -3.10 -m pip install torch==2.5.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+py -3.10 -m pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio --index-url https://download.pytorch.org/whl/cu121
 pause
 
-git clone https://github.com/facebookresearch/pytorch3d.git
-cd pytorch3d
-call python .\setup.py
+git clone https://github.com/Dao-AILab/flash-attention.git
+cd flash-attention
+py -3.10 setup.py install
 pause
-
 cd ../
+
+py -3.10 -m pip install qwen-vl-utils==0.0.10
+
+py -3.10 -m pip install git+https://github.com/facebookresearch/pytorch3d.git@stable"
 
 :: for debugging; comment later
 @echo on
@@ -37,22 +51,17 @@ py -3.10 -m pip install cadquery==2.5.2
 py -3.10 -m pip install CQ-editor
 
 :: replicate the pip installs from the Dockerfile from cadrille github:
-py -3.10 -m pip install accelerate==0.34.2 cadquery-ocp==7.7.2 casadi==3.6.7 einops==0.8.0 transformers==4.50.3 flash-attn==2.7.2.post1 manifold3d==3.0.0 trimesh==4.5.3 contourpy==1.3.1 scipy==1.14.1 imageio==2.36.1 scikit-image==0.25.0 ipykernel==6.29.5 ipywidgets==8.1.5 cadquery==2.5.2
+py -3.10 -m pip install accelerate==0.34.2 cadquery-ocp==7.7.2 casadi==3.6.7 einops==0.8.0 transformers==4.50.3 manifold3d==3.0.0 trimesh==4.5.3 contourpy==1.3.1 scipy==1.14.1 imageio==2.36.1 scikit-image==0.25.0 ipykernel==6.29.5 ipywidgets==8.1.5 cadquery==2.5.2
 py -3.10 -m pip install open3d==0.19.0 
 
-:: fails for some reason, use github instead
-:: pip install pytorch3d==0.7.4
-py -3.10 -m pip install git+https://github.com/facebookresearch/pytorch3d.git
-
 :: clone repos and install reqs
-git clone https://gitub.com/NVlabs/PartPacker.git
+git clone https://github.com/NVlabs/PartPacker.git
 cd PartPacker
 py -3.10 -m pip install -r requirements.txt
 py -3.10 -m pip install -r requirements.lock.txt
-py -3.10 -m pip install flash-attn --no-build-isolation
+py -3.10 -m pip install flash-attn
 py -3.10 -m pip install meshiki
-:: can't install from requirements.txt so use link
-py -3.10 -m pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 --index-url https://download.pytorch.org/whl/cu121 
+
 py -3.10 -m pip install -r requirements.txt
 py -3.10 -m pip install -r requirements.lock.txt
 
@@ -65,8 +74,6 @@ curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt" --output
 :: wget https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt
 :: wget https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt
 
-echo Check if folders created correctly
-pause
 
 echo Changing back to directory of this script
 cd ../../
@@ -74,6 +81,14 @@ dir
 
 git clone https://github.com/col14m/cadrille.git
 copy chat_cadrille.py cadrille\
+
+cd cadrille
+cd data
+git clone https://huggingface.co/datasets/filapro/cad-recode-v1.5
+git clone https://huggingface.co/datasets/maksimko123/text2cad
+git clone https://huggingface.co/datasets/maksimko123/fusion360_test_mesh
+git clone https://huggingface.co/datasets/maksimko123/deepcad_test_mesh
+cd ../../
 
 :: clear install cache and remove all wheels
 pip cache purge
