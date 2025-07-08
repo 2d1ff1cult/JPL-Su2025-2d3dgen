@@ -1,5 +1,6 @@
 @echo off
-
+:: TODO: SET LONG PATH USING REGISTRY EDITOR
+:: TODO: git config --system core.longpaths true
 :: MAKE SURE TO DOWNLOAD PYTHON 3.10 AND INSTALL AS FOLLOWS:
 :: do NOT install for all users
 :: add to path
@@ -23,11 +24,15 @@ py -3.10 -m pip uninstall wheel setuptools -y
 py -3.10 -m pip install --upgrade wheel setuptools
 
 py -3.10 -m pip install ninja
+py -3.10 -m pip install trimesh
 
 py -3.10 -m pip uninstall torch torchvision torchaudio -y
-# py -3.10 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-# py -3.10 -m pip install torch==2.5.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-py -3.10 -m pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio --index-url https://download.pytorch.org/whl/cu121
+:: # py -3.10 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+:: # py -3.10 -m pip install torch==2.5.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+:: # py -3.10 -m pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio --index-url https://download.pytorch.org/whl/cu121
+# py -3.10 -m pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu129
+py -3.10 -m pip install torch==2.2.2+cu118 torchvision==0.17.2+cu118 torchaudio -f https://download.pytorch.org/whl/torch_stable.html 
+py -3.10 -m pip install pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py310_cu118_pyt222/download.html
 pause
 
 git clone https://github.com/Dao-AILab/flash-attention.git
@@ -59,7 +64,6 @@ git clone https://github.com/NVlabs/PartPacker.git
 cd PartPacker
 py -3.10 -m pip install -r requirements.txt
 py -3.10 -m pip install -r requirements.lock.txt
-py -3.10 -m pip install flash-attn
 py -3.10 -m pip install meshiki
 
 py -3.10 -m pip install -r requirements.txt
