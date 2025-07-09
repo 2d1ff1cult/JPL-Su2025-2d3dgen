@@ -1,4 +1,8 @@
 @echo off
+
+dir
+pause
+
 :: TODO: SET LONG PATH USING REGISTRY EDITOR
 :: TODO: git config --system core.longpaths true
 :: MAKE SURE TO DOWNLOAD PYTHON 3.10 AND INSTALL AS FOLLOWS:
@@ -6,6 +10,7 @@
 :: add to path
 :: done and restart all terminals
 
+:: ------------------------- INITIAL SETUP -------------------------
 :: for later use; packing the environment for cross-user repeatability
 py -3.10 -m pip install venv-pack wheel
 git config --system core.longpaths true
@@ -26,13 +31,14 @@ py -3.10 -m pip install --upgrade wheel setuptools
 py -3.10 -m pip install ninja
 py -3.10 -m pip install trimesh
 
+:: ------------------------- BUILDING TORCH -------------------------
 py -3.10 -m pip uninstall torch torchvision torchaudio -y
 :: # py -3.10 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 :: # py -3.10 -m pip install torch==2.5.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 :: # py -3.10 -m pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio --index-url https://download.pytorch.org/whl/cu121
-# py -3.10 -m pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu129
-py -3.10 -m pip install torch==2.2.2+cu118 torchvision==0.17.2+cu118 torchaudio -f https://download.pytorch.org/whl/torch_stable.html 
-py -3.10 -m pip install pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py310_cu118_pyt222/download.html
+py -3.10 -m pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu129
+
+py -3.10 -m pip install ninja pybind11>=2.12 cmake
 pause
 
 git clone https://github.com/Dao-AILab/flash-attention.git
@@ -40,10 +46,24 @@ cd flash-attention
 py -3.10 setup.py install
 pause
 cd ../
+dir
+pause
 
 py -3.10 -m pip install qwen-vl-utils==0.0.10
 
-py -3.10 -m pip install git+https://github.com/facebookresearch/pytorch3d.git@stable"
+:: ------------------------- SETTING UP PYTORCH3D -------------------------
+:: py -3.10 -m pip install git+https://github.com/facebookresearch/pytorch3d.git@stable
+:: MAYBE REMOVE EITHER ABOVE OR BELOW LINE
+git clone --recursive https://github.com/facebookresearch/pytorch3d.git
+pause
+cd pytorch3d
+dir
+pause
+
+python setup.py install
+:: cd ../
+dir
+pause
 
 :: for debugging; comment later
 @echo on
@@ -51,6 +71,7 @@ call
 @echo off
 :: echo Pausing to validate env start; should see (2d3dgen) prefixed to shell
 
+:: ------------------------- SETTING UP CADQUERY -------------------------
 :: setting up cadquery
 py -3.10 -m pip install cadquery==2.5.2
 py -3.10 -m pip install CQ-editor
@@ -69,6 +90,7 @@ py -3.10 -m pip install meshiki
 py -3.10 -m pip install -r requirements.txt
 py -3.10 -m pip install -r requirements.lock.txt
 
+:: ------------------------- DOWNLOADING PRETRAINED MODELS FOR PARTPACKER -------------------------
 :: windows CMD
 mkdir pretrained
 cd pretrained
@@ -82,7 +104,9 @@ curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt" --output
 echo Changing back to directory of this script
 cd ../../
 dir
+pause
 
+:: ------------------------- SETTING UP CADRILLE FROM SOURCE -------------------------
 git clone https://github.com/col14m/cadrille.git
 copy chat_cadrille.py cadrille\
 
@@ -93,7 +117,15 @@ git clone https://huggingface.co/datasets/maksimko123/text2cad
 git clone https://huggingface.co/datasets/maksimko123/fusion360_test_mesh
 git clone https://huggingface.co/datasets/maksimko123/deepcad_test_mesh
 cd ../../
+dir
+pause
 
+:: ------------------------- COPYING TRAINING DATASET ------------------------- 
+copy cadrille\data\text2cad\text2cad.zip .
+tar -xf text2cad.zip -C cadrille\data\text2cad
+pause
+
+:: ------------------------- CLEAN UP -------------------------
 :: clear install cache and remove all wheels
 pip cache purge
 
