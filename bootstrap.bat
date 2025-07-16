@@ -142,6 +142,8 @@ git clone https://huggingface.co/datasets/maksimko123/deepcad_test_mesh
 :: huggingface-cli repo clone maksimko123/fusion360_test_mesh data\fusion360_test_mesh
 :: huggingface-cli repo clone maksimko123/deepcad_test_mesh   data\deepcad_test_mesh
 
+:: per the col14m/cadrille github, must convert CQ scripts to meshes
+py -3.10 cadrecode2mesh.py
 
 cd ../
 :: create train/val pickles
