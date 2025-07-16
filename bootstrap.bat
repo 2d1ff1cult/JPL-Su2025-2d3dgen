@@ -135,7 +135,7 @@ git clone https://huggingface.co/datasets/maksimko123/text2cad
 git clone https://huggingface.co/datasets/maksimko123/fusion360_test_mesh
 git clone https://huggingface.co/datasets/maksimko123/deepcad_test_mesh
 
-huggingface-cli login
+:: huggingface-cli login
 
 :: huggingface-cli repo clone filapro/cad-recode-v1.5 data\cad-recode-v1.5
 :: huggingface-cli repo clone maksimko123/text2cad    data\text2cad
