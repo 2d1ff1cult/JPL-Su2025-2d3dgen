@@ -7,4 +7,6 @@ The following repos are called by the bootstrap script above:
 https://github.com/2d1ff1cult/PartPacker
 https://github.com/2d1ff1cult/cadrille
 
+3. To run PartPacker, execute `partpacker_run.bat`
+
 Changes were made to the original developers' code and stored in these forks
