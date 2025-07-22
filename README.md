@@ -1,6 +1,15 @@
-# ⚠️ You are NOT required to `git clone` any of the above repos!
+# 2d3dgen
+
+## ⚠️ You are NOT required to `git clone` any of the above repos!
+
+# TODO: get the original environment used in development and add to this repo!
+
 Just do:
 `git clone http://github.com/2d1ff1cult/JPL-Su2025-2d3dgen.git`
+
+# Some things to know
+1. It is important to note that this repo requires Python 3.10. **Everything uses `py -3.10` when running Python scripts.
+2. Additionally, the installation script here **does not** cause conflicts with existing Python installations (i.e. you can have Python 3.13 running as your primary Python while still being able to implement 2d3dgen.
 
 # Instructions:
 1. Run Command Prompt as admin and run:
@@ -12,5 +21,8 @@ The following repos are called by the bootstrap script above:
 - https://github.com/2d1ff1cult/cadrille
 
 3. To run PartPacker, execute `partpacker_run.bat`
+4. When performing inference with Cadrille, open CMD and do:
+   - `2d3dgen\Scripts\activate`
+This starts the virtual environment
 
 Changes were made to the original developers' code and stored in these forks. The original repos are incompatible with any of the work presented here.
