@@ -13,4 +13,4 @@ The following repos are called by the bootstrap script above:
 
 3. To run PartPacker, execute `partpacker_run.bat`
 
-Changes were made to the original developers' code and stored in these forks
+Changes were made to the original developers' code and stored in these forks. The original repos are incompatible with any of the work presented here.
