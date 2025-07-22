@@ -3,6 +3,7 @@
 ## ⚠️ You are NOT required to `git clone` any of the above repos!
 
 # TODO: get the original environment used in development and add to this repo!
+# TODO: create requirements.txt from work computer, and update bootstrap script
 
 Just do:
 `git clone http://github.com/2d1ff1cult/JPL-Su2025-2d3dgen.git`
