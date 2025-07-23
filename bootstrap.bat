@@ -6,7 +6,9 @@
 :: add to path
 :: done and restart all terminals
 
-
+:: ./
+dir
+pause
 :: useful when training
 SET PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
@@ -30,23 +32,30 @@ py -3.10 -m pip uninstall wheel setuptools -y
 py -3.10 -m pip install --upgrade wheel setuptools
 
 py -3.10 -m pip install ninja
-py -3.10 -m pip install trimesh
+py -3.10 -m pip install trimesh open3d
 
 :: HuggingFace lib, line below will be used to fetch training data, if required
 py -3.10 -m pip install datasets
 
 :: ------------------------- BUILDING TORCH -------------------------
-py -3.10 -m pip install ninja pybind11>=2.12 cmake
+# py -3.10 -m pip uninstall torch torchvision torchaudio -y
+:: # py -3.10 -m pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+:: # py -3.10 -m pip install torch==2.5.1+cu121 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+:: # py -3.10 -m pip install torch==2.5.1+cu121 torchvision==0.20.1+cu121 torchaudio --index-url https://download.pytorch.org/whl/cu121
+# py -3.10 -m pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu129
 
-:: broken for some reason, use sdpa in training/inference instead
-:: but you can try FA if you like :)
+py -3.10 -m pip install ninja pybind11>=2.12 cmake
+pause
+
 git clone https://github.com/Dao-AILab/flash-attention.git
 cd flash-attention
 py -3.10 setup.py install
-
+pause
 cd ../
 
 :: ./
+dir
+pause
 
 py -3.10 -m pip install qwen-vl-utils==0.0.10
 
@@ -54,13 +63,23 @@ py -3.10 -m pip install qwen-vl-utils==0.0.10
 :: py -3.10 -m pip install git+https://github.com/facebookresearch/pytorch3d.git@stable
 :: MAYBE REMOVE EITHER ABOVE OR BELOW LINE
 git clone --recursive https://github.com/facebookresearch/pytorch3d.git
+pause
 cd pytorch3d
+dir
+pause
 
 python setup.py install
 cd ../
 
-:: for debugging; comment later
+:: ./
+dir
+pause
 
+:: for debugging; comment later
+@echo on
+call
+@echo off
+:: echo Pausing to validate env start; should see (2d3dgen) prefixed to shell
 
 :: ------------------------- SETTING UP CADQUERY -------------------------
 :: setting up cadquery
@@ -85,8 +104,8 @@ py -3.10 -m pip install -r requirements.lock.txt
 :: windows CMD
 mkdir pretrained
 cd pretrained
-curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt" --output "vae.pt"
-curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt" --output "flow.pt"
+# curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt" --output "vae.pt"
+# curl -L "https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt" --output "flow.pt"
 :: linux
 :: wget https://huggingface.co/nvidia/PartPacker/resolve/main/vae.pt
 :: wget https://huggingface.co/nvidia/PartPacker/resolve/main/flow.pt
@@ -96,12 +115,15 @@ echo Changing back to directory of this script
 cd ../../
 
 :: ./
-
+dir
+pause
 
 :: ------------------------- SETTING UP CADRILLE FROM SOURCE -------------------------
 git clone https://github.com/2d1ff1cult/cadrille.git
 
 :: ./
+dir
+pause
 
 cd cadrille
 
@@ -113,6 +135,13 @@ git clone https://huggingface.co/datasets/maksimko123/text2cad
 git clone https://huggingface.co/datasets/maksimko123/fusion360_test_mesh
 git clone https://huggingface.co/datasets/maksimko123/deepcad_test_mesh
 
+:: huggingface-cli login
+
+:: huggingface-cli repo clone filapro/cad-recode-v1.5 data\cad-recode-v1.5
+:: huggingface-cli repo clone maksimko123/text2cad    data\text2cad
+:: huggingface-cli repo clone maksimko123/fusion360_test_mesh data\fusion360_test_mesh
+:: huggingface-cli repo clone maksimko123/deepcad_test_mesh   data\deepcad_test_mesh
+
 :: per the col14m/cadrille github, must convert CQ scripts to meshes
 py -3.10 cadrecode2mesh.py
 
@@ -121,10 +150,13 @@ cd ../
 py -3.10 -u prepare_data.py
 
 cd ../
+dir
+pause
 
 :: ------------------------- COPYING TRAINING DATASET ------------------------- 
 copy cadrille\data\text2cad\text2cad.zip .
 tar -xf text2cad.zip -C cadrille\data\text2cad
+pause
 
 :: ------------------------- CLEAN UP -------------------------
 :: clear install cache and remove all wheels
