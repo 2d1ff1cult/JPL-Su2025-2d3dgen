@@ -1,6 +1,7 @@
-# 2d3dgen
+# :gear:<img width="24" height="24" alt="heh" src="https://github.com/user-attachments/assets/f907926c-6dd3-4c75-b907-21ed3b0e9302" /> 2d3dgen: Rapid Digital Twin Generation
 
 ## ⚠️ You are NOT required to `git clone` any of the above repos!
+The `bootstrap.bat` Windows batch script will do all the installation for you :hugs:
 
 # TODO: get the original environment used in development and add to this repo!
 # TODO: create requirements.txt from work computer, and update bootstrap script
