@@ -6,9 +6,6 @@
 :: add to path
 :: done and restart all terminals
 
-:: ./
-dir
-pause
 :: useful when training
 SET PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
@@ -45,17 +42,14 @@ py -3.10 -m pip install datasets
 # py -3.10 -m pip install --pre torch torchvision torchaudio --index-url https://download.pytorch.org/whl/nightly/cu129
 
 py -3.10 -m pip install ninja pybind11>=2.12 cmake
-pause
 
 git clone https://github.com/Dao-AILab/flash-attention.git
 cd flash-attention
 py -3.10 setup.py install
-pause
+
 cd ../
 
-:: ./
-dir
-pause
+
 
 py -3.10 -m pip install qwen-vl-utils==0.0.10
 
@@ -65,15 +59,10 @@ py -3.10 -m pip install qwen-vl-utils==0.0.10
 git clone --recursive https://github.com/facebookresearch/pytorch3d.git
 pause
 cd pytorch3d
-dir
-pause
 
 python setup.py install
 cd ../
 
-:: ./
-dir
-pause
 
 :: for debugging; comment later
 @echo on
@@ -114,16 +103,8 @@ cd pretrained
 echo Changing back to directory of this script
 cd ../../
 
-:: ./
-dir
-pause
-
 :: ------------------------- SETTING UP CADRILLE FROM SOURCE -------------------------
 git clone https://github.com/2d1ff1cult/cadrille.git
-
-:: ./
-dir
-pause
 
 cd cadrille
 
@@ -135,27 +116,31 @@ git clone https://huggingface.co/datasets/maksimko123/text2cad
 git clone https://huggingface.co/datasets/maksimko123/fusion360_test_mesh
 git clone https://huggingface.co/datasets/maksimko123/deepcad_test_mesh
 
-:: huggingface-cli login
+:: added this dataset, not used in training
+:: TODO need to retrain using this dataset maybe
+:: gives you a zip folder called "CadQuery"
+git clone https://huggingface.co/ricemonster/NeurIPS11092
 
-:: huggingface-cli repo clone filapro/cad-recode-v1.5 data\cad-recode-v1.5
-:: huggingface-cli repo clone maksimko123/text2cad    data\text2cad
-:: huggingface-cli repo clone maksimko123/fusion360_test_mesh data\fusion360_test_mesh
-:: huggingface-cli repo clone maksimko123/deepcad_test_mesh   data\deepcad_test_mesh
+:: ------------------------- EXTRACT TRAINING DATASET ------------------------- 
+:: text2cad dataset comes in a zip for some reason...
+tar -xf text2cad\text2cad.zip -C text2cad\
+tar -xf NeurIPS11092\CadQuery.zip -C .
+move CQ CadQuery
 
 :: per the col14m/cadrille github, must convert CQ scripts to meshes
 py -3.10 cadrecode2mesh.py
 
+:: process dataset CadQuery from NeurIPS11092 (uncomment later)
+:: py -3.10 cadquery2mesh.py
+
 cd ../
+
 :: create train/val pickles
+:: TODO edit this to process cadquery dataset folder!!!
 py -3.10 -u prepare_data.py
 
 cd ../
 dir
-pause
-
-:: ------------------------- COPYING TRAINING DATASET ------------------------- 
-copy cadrille\data\text2cad\text2cad.zip .
-tar -xf text2cad.zip -C cadrille\data\text2cad
 pause
 
 :: ------------------------- CLEAN UP -------------------------
