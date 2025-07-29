@@ -49,15 +49,12 @@ py -3.10 setup.py install
 
 cd ../
 
-
-
 py -3.10 -m pip install qwen-vl-utils==0.0.10
 
 :: ------------------------- SETTING UP PYTORCH3D -------------------------
 :: py -3.10 -m pip install git+https://github.com/facebookresearch/pytorch3d.git@stable
 :: MAYBE REMOVE EITHER ABOVE OR BELOW LINE
 git clone --recursive https://github.com/facebookresearch/pytorch3d.git
-pause
 cd pytorch3d
 
 python setup.py install
