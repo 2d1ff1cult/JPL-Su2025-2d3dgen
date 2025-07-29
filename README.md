@@ -29,3 +29,9 @@ The following repos are called by the bootstrap script above:
 This starts the virtual environment
 
 Changes were made to the original developers' code and stored in these forks. The original repos are incompatible with any of the work presented here.
+
+
+## TODO
+- make a new dataset from Neur11092.
+  - Currently, it's just a bunch of CadQuery scripts in a folder
+  - Need to make `train` and `val` split folders
