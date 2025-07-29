@@ -34,4 +34,4 @@ Changes were made to the original developers' code and stored in these forks. Th
 ## TODO
 - make a new dataset from Neur11092.
   - Currently, it's just a bunch of CadQuery scripts in a folder
-  - Need to make `train` and `val` split folders
+  - Need to make `train` and `val` split folders. **Currently, this needs to be done manually**
