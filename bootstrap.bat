@@ -28,7 +28,7 @@ pip install --upgrade pip
 py -3.10 -m pip uninstall wheel setuptools -y
 py -3.10 -m pip install --upgrade wheel setuptools
 
-py -3.10 -m pip install ninja
+py -3.10 -m pip install ninja bitsandbytes
 py -3.10 -m pip install trimesh open3d
 
 :: HuggingFace lib, line below will be used to fetch training data, if required
