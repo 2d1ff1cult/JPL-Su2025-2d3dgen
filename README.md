@@ -17,7 +17,7 @@ Just do:
 # Instructions:
 1. Run Command Prompt as admin and run:
 `reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem /v LongPathsEnabled /t REG_DWORD /d 1 /f`
-2. Run bootstrap.bat 
+2. Run `bootstrap_inference.bat` if you don't plan to retrain. Else, run `bootstrap_train.py` 
 
 The following repos are called by the bootstrap script above:
 - https://github.com/2d1ff1cult/PartPacker
